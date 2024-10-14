@@ -5,7 +5,7 @@ class _UserBase(BaseModel):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class User(_UserBase):
     name: str
@@ -19,7 +19,7 @@ class _TransactionItemBase(BaseModel):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TransactionItem(_TransactionItemBase):
     transaction_ID: int
@@ -37,7 +37,7 @@ class _TransactionBase(BaseModel):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Transaction(_TransactionBase):
     title: str
@@ -56,7 +56,7 @@ class _TransactionPartyBase(BaseModel):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TransactionParty(_TransactionPartyBase):
     name: str
@@ -69,7 +69,7 @@ class _TagBase(BaseModel):
     user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Tag(_TagBase):
     name: str

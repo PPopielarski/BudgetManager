@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from PostgresqlHandler import Base
+from Data.PostgresqlHandler import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -10,6 +10,7 @@ class User(Base):
     transactions = relationship("Transaction", back_populates="user")
 
 class TransactionItemUnit(Base):
+    __tablename__ = "transaction_item_unit"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True)
     abbreviation = Column(String, unique=True)
@@ -45,5 +46,6 @@ class TransactionParty(Base):
 class Tag(Base):
     __tablename__ = "tags"
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
     name = Column(String)
     parent_id = Column(Integer, ForeignKey("tags.id"))

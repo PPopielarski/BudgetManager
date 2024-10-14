@@ -3,14 +3,17 @@ from sqlalchemy.orm import Session
 from Data.PostgresqlHandler import get_db
 from Data import CRUD
 from Data import DataModels
+import os
+from dotenv import load_dotenv
 
 from passlib.context import CryptContext
 import jwt
 
+load_dotenv()
 app = FastAPI()
 
 # Ustawienia JWT
-SECRET_KEY = "mysecretkey"  # Zmień na silny, losowy klucz
+SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -29,6 +32,10 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+@app.get("/users/{user_id}/tags", response_model=DataModels.Tag)
+def read_users_tags(user_id: int, db: Session = Depends(get_db)):
+    return CRUD.get_all_user_tags(db, user_id)
 
 @app.patch("/users/{user_id}", response_model=DataModels.User)
 def patch_user(user_id: int, user: DataModels.UserUpdate, db: Session = Depends(get_db)):

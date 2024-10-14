@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from ORMModels import User, Transaction, TransactionItem, TransactionParty, Tag
-from DataModels import User as UserSchema, Transaction as TransactionSchema, TransactionItem as TransactionItemSchema, Tag as TagSchema
+from Data.ORMModels import User, Transaction, TransactionItem, TransactionParty, Tag
+from Data.DataModels import User as UserSchema, Transaction as TransactionSchema, TransactionItem as TransactionItemSchema, Tag as TagSchema
 
 # User CRUD
 def get_user(db: Session, user_id: int):
@@ -57,7 +57,7 @@ def create_transaction_item(db: Session, item: TransactionItemSchema):
     return db_item
 
 # Tag CRUD
-def get_all_tags(db: Session, user_id: int):
+def get_all_user_tags(db: Session, user_id: int):
     return db.query(Tag).filter(Tag.user_id == user_id).all()
 
 def get_tag(db: Session, tag_id: int):
